@@ -5,7 +5,7 @@ import { Observable, throwError, catchError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 //Declaring the api url that will provide data for the client app
-const apiUrl = 'YOUR_HOSTED_API_URL_HERE/';
+const apiUrl = 'https://myflixapp1.herokuapp.com';
 @Injectable({
   providedIn: 'root'
 })
@@ -37,7 +37,6 @@ export class UserRegistrationService {
           Authorization: 'Bearer ' + token
         })
       }).pipe(
-        map(this.extractResponseData),
         catchError(this.handleError)
       );
     }
@@ -51,7 +50,6 @@ export class UserRegistrationService {
           Authorization: 'Bearer ' + token
         })
       }).pipe(
-        map(this.extractResponseData),
         catchError(this.handleError)
       );
     }
@@ -65,7 +63,6 @@ export class UserRegistrationService {
           Authorization: 'Bearer ' + token
         })
       }).pipe(
-        map(this.extractResponseData),
         catchError(this.handleError)
       );
     }
@@ -79,7 +76,6 @@ export class UserRegistrationService {
           Authorization: 'Bearer ' + token
         })
       }).pipe(
-        map(this.extractResponseData),
         catchError(this.handleError)
       );
     }
@@ -92,8 +88,7 @@ export class UserRegistrationService {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
-      }).pipe(
-        map(this.extractResponseData), catchError(this.handleError)
+      }).pipe(catchError(this.handleError)
       );
     }
 
@@ -101,13 +96,12 @@ export class UserRegistrationService {
     // This will send back the favorite movies component.
 
     getFavoriteMovies(username: any): Observable<any> {
-      const token = localStorage.getitem('token');
+      const token = localStorage.getItem('token');
       return this.http.get(apiUrl + `users/${username}`, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
-      }).pipe(
-        map(this.extractResponseData), catchError(this.handleError)
+      }).pipe(catchError(this.handleError)
       );
     }
 
@@ -115,13 +109,12 @@ export class UserRegistrationService {
 
     addFavoriteMovie(movieId: any): Observable<any> {
       const token = localStorage.getItem('token');
-      const username = localStorage.getitem('username');
+      const username = localStorage.getItem('username');
       return this.http.post(apiUrl + `users/${username}/movies/${movieId}`, null, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         })
-      }).pipe(
-        map(this.extractResponseData), catchError(this.handleError)
+      }).pipe(catchError(this.handleError)
       );
     }
 
@@ -135,8 +128,7 @@ export class UserRegistrationService {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
-      }).pipe(
-        map(this.extractResponseData), catchError(this.handleError)
+      }).pipe(catchError(this.handleError)
       );
     }
 
@@ -145,26 +137,25 @@ export class UserRegistrationService {
       const token = localStorage.getItem('token');
       const user = localStorage.getItem('username');
       return this.http
-        .delete(apiUrl + `users/${username}`, {
+        .delete(apiUrl + 'users', {
           headers: new HttpHeaders({
             Authorization: 'Bearer ' + token,
           }),
         })
-        .pipe(map(this.extractResponseData), catchError(this.handleError)
+        .pipe(catchError(this.handleError)
       );
     }
 
 
     deleteFavoriteMovie( movieId: any): Observable<any> {
-      const token = localStorage.getitem('token');
+      const token = localStorage.getItem('token');
       const username = localStorage.getItem('username');
       return this.http.delete(
         apiUrl + `users/${username}/movies/${movieId}`, {
           headers: new HttpHeaders({
             Authorization: 'Bearer ' + token,
           })
-        }).pipe(
-          map(this.extractResponseData), catchError(this.handleError)
+        }).pipe(catchError(this.handleError)
       );
     }
 
